@@ -32,14 +32,12 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  void _tappedFloatingButton() {
-    print('button tapped');
+  void _tappedFloatingButton() async {
     NfcManager.instance.startSession(onDiscovered: (NfcTag tag) async {
-      var ndef = Ndef.from(tag);
-      print(ndef);
-    },
-    onError: (NfcError error) async {
-      print(error.message);
+      print('success\nmessage:${tag.data}');
+      NfcManager.instance.stopSession();
+    }, onError: (NfcError error) async {
+      print('error: ${error.message}');
     });
   }
 
@@ -54,7 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: _tappedFloatingButton,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
     );
   }
 }
